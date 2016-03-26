@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <tchar.h>
+#include <time.h>
 
 
 
