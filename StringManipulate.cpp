@@ -37,3 +37,14 @@ std::string StringManipulate::FindNumInThree()
 
 
 }
+
+bool StringManipulate::isPalindrome()
+{
+	int length = _string.length();
+
+	for (int i = 0; i < length/2; i++)
+	{	
+		if (_string[i] != _string[length - 1 - i]) { return false; }
+	}
+	return true;
+}

@@ -18,8 +18,16 @@ void Inorder(BSTnode*);
 int main()
 {
 	//cout << "hello world!" << endl;
-	StringManipulate sm("2k34lj233jlkj;kjh5lk4l34j5li3uh5liu3i5uhluhluhuuhi167lk8hl3h76457u67hli82uhli86l24h5iu224");
+	StringManipulate sm("123421");
 	cout << sm.FindNumInThree()<<endl;
+
+	if (sm.isPalindrome()) {
+		cout << "yes" << endl;
+	}
+	else
+	{
+		cout << "no" << endl;
+	}
 	
 	BSTnode* bstNode = NULL;
 	srand(time(NULL));

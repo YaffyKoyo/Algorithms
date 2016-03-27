@@ -13,5 +13,6 @@ public:
 	~StringManipulate();
 
 	std::string FindNumInThree();
+	bool isPalindrome();
 };
 
