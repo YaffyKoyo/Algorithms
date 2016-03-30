@@ -12,24 +12,40 @@ struct BSTnode
 	BSTnode *left, *right;
 };
 
+void NullTerminalStringReverse(char * str);
+
+void replaceSpaces(char str[], int length);
+
 BSTnode *CreateBST(BSTnode*, int);
 void Inorder(BSTnode*);
 
 int main()
 {
 	//cout << "hello world!" << endl;
-	StringManipulate sm("123421");
-	cout << sm.FindNumInThree()<<endl;
+	StringManipulate sm("123456");
+	StringManipulate cm("ababbbbaddddccaaa");
+	cout << sm.isPermutation("645322") << endl;
 
-	if (sm.isPalindrome()) {
+	char keke[20] = "a b cd ef";
+	char* kePtr = keke;
+	NullTerminalStringReverse(kePtr);
+	replaceSpaces(keke, 9);
+	cout << keke << endl;
+	cout << cm.Compress() << endl;
+
+
+
+	if (sm.isUniqueChars()) {
 		cout << "yes" << endl;
 	}
 	else
 	{
 		cout << "no" << endl;
 	}
-	
-	BSTnode* bstNode = NULL;
+
+
+	//Binary tree implement
+/*	BSTnode* bstNode = NULL;
 	srand(time(NULL));
 
 	TreeManipulate *tm = new TreeManipulate();
@@ -52,7 +68,7 @@ int main()
 		cout << a[i]<<" ";
 	}
 	cout << endl;
-	
+
 
 	Inorder(bstNode);
 	cout << endl;
@@ -60,10 +76,62 @@ int main()
 	cout << endl;
 	tm->PreOrderTraversal(tm->root);
 	cout << endl;
-	tm->PostOrderTraversal(tm->root);
+	tm->PostOrderTraversal(tm->root);*/
 
 	system("pause");
 	return 0;
+}
+
+/*
+	cracking the coding interview
+	Problem 1.2
+	Implement a function void reverse(char* str) in C/C++ which reverses a null-terminated string
+*/
+void NullTerminalStringReverse(char* str) {
+	int length = 0;
+	while (str[length] != '\0')
+	{
+		length++;
+	}
+
+	int mid = length / 2;
+	for (int i = 0; i < mid; i++) {
+		char k;
+		k = str[i];
+		str[i] = str[length - 1 - i];
+		str[length - 1 - i] = k;
+	}
+}
+/*
+	cracking the coding interview
+	Problem 1.4
+	replace space with '%20' in a string
+*/
+void replaceSpaces(char str[], int length) {
+	int i = 0;
+	int spaceCount = 0;
+	for (int n = 0; n < length; n++) {
+		if (str[n] == ' ') spaceCount++;
+	}
+
+	int finalLength = length + spaceCount * 2;
+	str[finalLength] = '\0';
+	for (size_t i = length-1; i >0; i--)
+	{
+		if (str[i] == ' ') 
+		{
+			str[finalLength - 1] = '0';
+			str[finalLength - 2] = '2';
+			str[finalLength - 3] = '%';
+			finalLength -= 3;
+		}
+		else
+		{
+			str[finalLength - 1] = str[i];
+			finalLength -= 1;
+		}
+	}
+
 }
 
 BSTnode * CreateBST(BSTnode* root, int element)
@@ -79,19 +147,19 @@ BSTnode * CreateBST(BSTnode* root, int element)
 		if (element < root->data)
 			root->left = CreateBST(root->left, element);
 		else
-			if (element>root->data)
-			root->right = CreateBST(root->right, element);
+			if (element > root->data)
+				root->right = CreateBST(root->right, element);
 			else
 				printf(" Duplicate Element !! Not Allowed !!!");
 
-				return(root);
+		return(root);
 
 	}
 }
 
 void Inorder(BSTnode *root)
 {
-	if(root != NULL)
+	if (root != NULL)
 	{
 		Inorder(root->left);
 		printf(" %d ", root->data);
