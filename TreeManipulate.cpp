@@ -71,7 +71,6 @@ void TreeManipulate::PostOrderTraversal(tree* root)
 	}
 }
 
-
 TreeManipulate::~TreeManipulate()
 {
 }

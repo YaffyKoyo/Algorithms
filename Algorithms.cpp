@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "StringManipulate.h"
 #include "TreeManipulate.h"
+#include <unordered_map>
 using namespace std;
 
 struct BSTnode
@@ -12,12 +13,27 @@ struct BSTnode
 	BSTnode *left, *right;
 };
 
+int main();
+
 void NullTerminalStringReverse(char * str);
 
 void replaceSpaces(char str[], int length);
 
 BSTnode *CreateBST(BSTnode*, int);
 void Inorder(BSTnode*);
+
+bool isAnagram(string str1, string str2);
+
+void insertionSort(vector<int> ar);
+
+void insertionSort(int ar_size, int * ar);
+
+int nonContiguousSum(int size, int * array);
+
+int contiguousSum(int size, int * array);
+
+int vectorMaxSum(int ar_length, vector<int*> intVector);
+
 
 int main()
 {
@@ -78,6 +94,110 @@ int main()
 	cout << endl;
 	tm->PostOrderTraversal(tm->root);*/
 
+	char* string1 = "string1";
+	char string2[] = "string2";
+	cout << string1 << endl;
+
+	//test.............for hashMap
+	/*int num;
+	cout << "type: ";
+	cin >> num;
+	for (int i = 0; i < num; i++) {
+		string temp;
+		unordered_map<char, int> tempHash;
+		cin >> temp;
+		for (int n = 0; n < temp.length(); n++) {
+			auto search = tempHash.find(temp[n]);
+			if (search!=tempHash.end()) {
+				tempHash[temp[n]]++;
+			}
+			else {
+				tempHash[temp[n]] = 1;
+			}
+		}
+
+		for (auto it = tempHash.begin();it!=tempHash.end();++it)
+		{
+			cout << " " << it->first << ":" << it->second;
+		}
+		cout << endl;
+
+	}
+*/
+
+//test for sherlock and anagram
+/*int num;
+cin >> num;
+for (int i = 0; i < num; i++) {
+	string temp;
+	cin >> temp;
+	int length = temp.length();
+	int sum = 0;
+	for (int subLength = 1; subLength < length;subLength++) {
+		vector<string> subStrings;
+		for (int n=0;n<length-subLength+1;n++)
+		{
+			subStrings.push_back(temp.substr(n, subLength));
+		}
+		cout << "sub string length = " << subLength <<":"<< endl;
+		for (auto it = subStrings.begin();it!=subStrings.end()-1;++it)
+		{
+			for (auto itNext = it+1;itNext!=subStrings.end();++itNext)
+			{
+				if (isAnagram(*it,*itNext))
+				{
+					sum++;
+				}
+			}
+		}
+		cout << endl;
+
+	}
+	cout << sum << endl;
+
+}*/
+
+//test for insertion sort part1
+/*vector <int>  _ar;
+int _ar_size;
+cin >> _ar_size;
+for (int _ar_i = 0; _ar_i < _ar_size; _ar_i++) {
+	int _ar_tmp;
+	cin >> _ar_tmp;
+	_ar.push_back(_ar_tmp);
+}
+
+insertionSort(_ar);*/
+
+
+//test for insertion sort part2
+	/*int _ar_size;
+	cin >> _ar_size;
+	int *_ar;
+	_ar = new int[_ar_size];
+	int _ar_i;
+	for (_ar_i = 0; _ar_i < _ar_size; _ar_i++) {
+		cin >> _ar[_ar_i];
+	}
+
+
+	insertionSort(_ar_size, _ar);
+
+	delete _ar;*/
+
+//test for maxsubarray
+	int num;
+	cin >> num;
+	for (int i = 0; i < num; i++) {
+		int n, *array;
+		cin >> n;
+		array = new int[n];
+		for (int j = 0; j < n; j++) {
+			cin >> array[j];
+		}
+		cout << contiguousSum(n, array) << endl;
+	}
+
 	system("pause");
 	return 0;
 }
@@ -116,9 +236,9 @@ void replaceSpaces(char str[], int length) {
 
 	int finalLength = length + spaceCount * 2;
 	str[finalLength] = '\0';
-	for (size_t i = length-1; i >0; i--)
+	for (size_t i = length - 1; i > 0; i--)
 	{
-		if (str[i] == ' ') 
+		if (str[i] == ' ')
 		{
 			str[finalLength - 1] = '0';
 			str[finalLength - 2] = '2';
@@ -165,4 +285,165 @@ void Inorder(BSTnode *root)
 		printf(" %d ", root->data);
 		Inorder(root->right);
 	}
+}
+
+bool isAnagram(string str1, string str2) {
+	bool flag = true;
+	if (str1.length() != str2.length())
+	{
+		return false;
+	}
+	else
+	{
+		int letters1[26];
+		int letters2[26];
+		for (int i = 0; i < 26; i++)
+		{
+			letters1[i] = 0;
+			letters2[i] = 0;
+		}
+		for (int i = 0; i < str1.length(); i++)
+		{
+			letters1[str1[i] - 'a']++;
+			letters2[str2[i] - 'a']++;
+		}
+		for (size_t i = 0; i < 26; i++)
+		{
+			if (letters1[i] != letters2[i])
+			{
+				flag = false;
+			}
+		}
+		return flag;
+	}
+}
+
+void insertionSort(vector <int>  ar) {
+	int temp = ar.back();
+	for (auto it = ar.rbegin(); it != ar.rend(); ++it) {
+		if (*(it + 1) > temp) {
+			*it = *(it + 1);
+			for (auto jt = ar.begin(); jt != ar.end(); ++jt) {
+				cout << *jt << ' ';
+			}
+			cout << endl;
+		}
+		else {
+			*it = temp;
+			break;
+		}
+	}
+	for (auto jt = ar.begin(); jt != ar.end(); ++jt) {
+		cout << *jt << ' ';
+	}
+}
+
+void insertionSort(int ar_size, int* ar) {
+	int count_i = 0;
+	for (int i = 1; i < ar_size; ++i)
+	{
+		int temp = ar[i];
+		int count = 0;
+		for (int j = i; j > 0; --j)
+		{
+			count++;
+			if (ar[j - 1] > temp)
+			{
+				ar[j] = ar[j - 1];
+				ar[j - 1] = temp;
+			}
+		}
+		for (int num = 0; num < ar_size; num++)
+		{
+			cout << ar[num] << ' ';
+		}
+		cout <<endl<<"j loop times: "<<count<< endl;
+		count_i++;
+	}
+	cout << "i loop times: " << count_i << endl;
+}
+
+int nonContiguousSum(int size, int *array) {
+	int postiveNum = 0;
+	int maxNum = -100000;
+	int sum = 0;
+	bool *flags;
+	flags = new bool[size];
+	for (int i=0;i<size;i++)
+	{
+		flags[i] = false;
+		if (array[i]>0)
+		{
+			flags[i] = true;
+			postiveNum++;
+		}
+		if (maxNum<array[i])
+		{
+			maxNum = array[i];
+		}
+	}
+
+	if (postiveNum==0)
+	{
+		sum = maxNum;
+	}
+	else {
+		for (int i=0;i<size;i++)
+		{
+			if (flags[i])
+			{
+				sum += array[i];
+			}
+		}
+	}
+	return sum;
+}
+
+int contiguousSum(int size, int *array) {
+	int sum = 0;
+	int max = -100000;
+	for (int subLength = 1; subLength < size+1; subLength++) {
+		vector<int*> subArrays;
+		int currentLengthMaxSum = 0;
+		for (int n = 0; n < size - subLength + 1; n++) {
+			int* subArray;
+			subArray = new int[subLength];
+			for (int k=0;k<subLength;k++)
+			{
+				subArray[k] = array[n + k];
+			}
+			subArrays.push_back(subArray);
+		}
+		for (auto it = subArrays.begin();it!=subArrays.end();++it)
+		{
+			for (size_t i = 0; i < subLength; i++)
+			{
+				cout << (*it)[i]<<" ";
+			}
+			cout << endl;
+		}
+		currentLengthMaxSum = vectorMaxSum(subLength, subArrays);
+		if (max<currentLengthMaxSum)
+		{
+			max = currentLengthMaxSum;
+		}
+	}
+	return max;
+}
+
+int vectorMaxSum(int ar_length, vector<int*> intVector) {
+	int sum = -100000;
+	for (auto it = intVector.begin(); it != intVector.end(); it++)
+	{
+		int tempSum = 0;
+		for (int n = 0; n < ar_length; n++)
+		{
+			tempSum += (*it)[n];
+		}
+		if (sum<tempSum)
+		{
+			sum = tempSum;
+		}
+	}
+	return sum;
 }
